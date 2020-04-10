@@ -1,7 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import { UserContext } from './UserContext'
 
 function BasicForm(props: any) {
+    
+    const focusMe = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (focusMe.current !== null) focusMe.current.focus()
+    }, [])
 
     const { userInfo, setUserInfo } = useContext(UserContext)
 
@@ -13,7 +19,7 @@ function BasicForm(props: any) {
         <div>
             <h2 className="bar">Enter User Details</h2>
             <div className="center">
-                <input type="text" placeholder="First name" onChange={handleFirstName} value={userInfo.firstName}/>
+                <input type="text" placeholder="First name" onChange={handleFirstName} value={userInfo.firstName} ref={focusMe} />
                 <input type="text" placeholder="Last name" onChange={handleLastName} value={userInfo.lastName}/>
                 <input type="text" placeholder="Email" onChange={handleEmail} value={userInfo.email}/>
                 <button onClick={props.nextStep}>Continue</button>

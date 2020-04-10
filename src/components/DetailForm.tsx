@@ -1,7 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import { UserContext } from './UserContext'
 
 function DetailForm(props: any) {
+
+    const focusMe = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if(focusMe.current !== null) focusMe.current.focus()
+    }, [])
 
     const { userInfo, setUserInfo } = useContext(UserContext)
 
@@ -13,7 +19,7 @@ function DetailForm(props: any) {
         <div>
             <h2 className="bar">Enter Personal Details</h2>
             <div className="center">
-                <input type="text" placeholder="Occupation" onChange={handleOccupation} value={userInfo.occupation}/>
+                <input type="text" placeholder="Occupation" onChange={handleOccupation} value={userInfo.occupation} ref={focusMe}/>
                 <input type="text" placeholder="City" onChange={handleCity} value={userInfo.city}/>
                 <input type="text" placeholder="Bio" onChange={handleBio} value={userInfo.bio}/>
                 <button onClick={props.nextStep}>Continue</button>
